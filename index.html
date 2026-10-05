@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>岡山・廣島・尾道 秋季漫遊指南</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;900&display=swap" rel="stylesheet">
+<style>
+    /* 日式美學與排版設定 */
+    :root {
+        --kurenai: #cb1b45; /* 艷紅 */
+        --aotake: #00896c; /* 青竹 */
+        --kon: #223a70;    /* 紺色 */
+        --kihaku: #fff9ee; /* 生成色 (背景) */
+        --sumi: #1c1c1c;   /* 墨色 (文字) */
+        --gold: #cda036;   /* 金色 */
+    }
+    
+    @page { size: A4; margin: 0; background-color: var(--kihaku); }
+    body { font-family: 'Noto Serif TC', 'PMingLiU', serif; margin: 0; padding: 0; color: var(--sumi); line-height: 1.6; background-color: var(--kihaku); }
+    a { color: var(--kon); text-decoration: none; border-bottom: 1px dotted var(--kon); transition: 0.3s; }
+    a:hover { color: var(--kurenai); border-bottom: 1px solid var(--kurenai); }
+    
+    /* 獨立頁面設定 */
+    .page { padding: 40px; page-break-after: always; min-height: 100vh; box-sizing: border-box; border: 15px solid var(--kihaku); background: white; outline: 1px solid #e0dcd3; outline-offset: -15px;}
+    
+    /* 封面 */
+    .cover { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background-color: var(--kihaku); background-image: radial-gradient(#e0dcd3 1px, transparent 1px); background-size: 20px 20px; }
+    .cover-title { font-size: 42pt; font-weight: 900; color: var(--kon); letter-spacing: 5px; margin-bottom: 10px; border-bottom: 4px double var(--gold); padding-bottom: 20px; }
+    .cover-subtitle { font-size: 16pt; color: var(--kurenai); letter-spacing: 2px; }
+    .cover-box { margin-top: 40px; background: rgba(255,255,255,0.9); padding: 30px; border: 1px solid var(--gold); text-align: left; width: 80%; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+    .cover-box h3 { color: var(--kon); border-left: 4px solid var(--kurenai); padding-left: 10px; font-size: 14pt; }
+    
+    /* 路線顏色標示 */
+    .line-color { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; vertical-align: middle; border: 1px solid rgba(0,0,0,0.2); }
+    .c-shinkansen { background-color: #0073C2; } /* 藍色 */
+    .c-sanyo-okayama { background-color: #F68B1E; } /* 橘色 (W線) */
+    .c-sanyo-hiro { background-color: #00B48D; } /* 綠色 (G線) */
+    .c-momotaro { background-color: #F592A4; } /* 粉紅色 (U線) */
+    .c-tram { background-color: #00AC9A; } /* 岡山路面電車青綠色 */
+    .c-ferry { background-color: #E60012; } /* 渡輪紅色 */
+    .c-taxi { background-color: #FFCC00; } /* 計程車黃色 */
+    .c-bus { background-color: #8A2BE2; } /* 巴士紫色 */
+    .c-walk { background-color: #999999; } /* 步行灰色 */
+    
+    .legend { display: flex; flex-wrap: wrap; gap: 10px; font-size: 10pt; margin-top: 10px; }
+    .legend-item { display: flex; align-items: center; }
+
+    /* 每日標題 */
+    .day-header { display: flex; align-items: baseline; border-bottom: 2px solid var(--kon); padding-bottom: 10px; margin-bottom: 25px; }
+    .day-num { font-size: 24pt; font-weight: 900; color: var(--kurenai); margin-right: 15px; }
+    .day-title { font-size: 18pt; color: var(--sumi); font-weight: 600; }
+    
+    /* 點到點交通與景點時間軸 */
+    .journey { margin-left: 10px; }
+    
+    /* 景點節點 */
+    .spot-node { display: flex; align-items: flex-start; margin-bottom: 5px; }
+    .spot-icon { font-size: 18pt; margin-right: 15px; color: var(--kurenai); line-height: 1; }
+    .spot-content { flex: 1; padding-bottom: 10px; }
+    .spot-name { font-size: 14pt; font-weight: 600; color: var(--kon); margin-bottom: 4px; }
+    .spot-name a { font-weight: 900; }
+    .spot-desc { font-size: 11pt; color: #555; }
+    
+    /* 交通路段 */
+    .transit-path { margin-left: 12px; border-left: 2px dashed #bba187; padding-left: 30px; padding-top: 15px; padding-bottom: 15px; margin-bottom: 5px; position: relative; }
+    .transit-tag { display: inline-block; background-color: var(--kihaku); border: 1px solid var(--gold); border-radius: 20px; font-weight: 600; transition: 0.2s;}
+    .transit-tag a { color: #8a6a4b; text-decoration: none; border-bottom: none; display: block; padding: 4px 12px; font-size: 10.5pt;}
+    .transit-tag:hover { border-color: var(--kurenai); background-color: #fff; }
+    .transit-tag a:hover { color: var(--kurenai); }
+    .transit-info { margin-top: 5px; font-size: 11pt; color: var(--kon); display: flex; flex-direction: column; gap: 4px;}
+    .est-time { color: var(--kurenai); font-weight: bold; font-size: 10.5pt; }
+    
+</style>
+</head>
+<body>
+
+    <!-- 封面 -->
+    <div class="page cover">
+        <div class="cover-title">岡山・廣島・尾道<br>秋風鐵道行</div>
+        <div class="cover-subtitle">八日七夜 專屬美學指南</div>
+        
+        <div class="cover-box">
+            <h3>🎫 交通票券與乘車戰術</h3>
+            <p style="font-size: 11pt;">
+            • <strong>JR 關西&廣島地區鐵路周遊券 (5日券)：</strong> Day 1 至 Day 5 啟用。<br>
+            • <strong>Suica / ICOCA：</strong> Day 0、Day 6、Day 7 市區路面電車與短程公車使用。<br>
+            • <strong>計程車：</strong> 四人同行滿載，景點若距車站步行超過 15 分鐘，將直接安排計程車接駁。
+            </p>
+            
+            <h3>📲 關於時刻表與導航連結</h3>
+            <p style="font-size: 11pt;">
+            • 點擊深藍色、有底線的 <strong>景點名稱</strong> 即可開啟 Google Maps 定位。<br>
+            • 點擊圓角外框的 <strong>交通圖示</strong> 即可開啟系統，自動帶入當下時間查詢最近的班次。<br>
+            • 所有交通路段皆已標示預估搭乘與轉乘總時間。
+            </p>
+
+            <h3>🎨 路線代表色圖例</h3>
+            <div class="legend">
+                <div class="legend-item"><span class="line-color c-shinkansen"></span>山陽新幹線 (藍)</div>
+                <div class="legend-item"><span class="line-color c-sanyo-okayama"></span>山陽本線/岡山段 (橘)</div>
+                <div class="legend-item"><span class="line-color c-sanyo-hiro"></span>山陽本線/廣島段 (綠)</div>
+                <div class="legend-item"><span class="line-color c-momotaro"></span>JR 桃太郎線 (粉)</div>
+                <div class="legend-item"><span class="line-color c-tram"></span>岡山路面電車 (青)</div>
+                <div class="legend-item"><span class="line-color c-ferry"></span>JR 宮島渡輪 (紅)</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Day 0 -->
+    <div class="page">
+        <div class="day-header">
+            <div class="day-num">Day 0</div>
+            <div class="day-title">10/8 (四) ｜ 抵達與牛舌接風</div>
+        </div>
+        
+        <div class="journey">
+            <div class="spot-node">
+                <div class="spot-icon">✈️</div>
+                <div class="spot-content">
+                    <div class="spot-name"><a href="https://www.google.com/maps/search/?api=1&query=Okayama+Airport" target="_blank">岡山桃太郎機場 (16:30 抵達)</a></div>
+                    <div class="spot-desc">辦理入境手續與提領行李。</div>
+                </div>
+            </div>
+            
+            <div class="transit-path">
+                <div class="transit-tag"><a href="https://www.okayama-airport.org/tw/access/bus" target="_blank"><span class="line-color c-bus"></span>🚌 機場巴士 (點擊查即時班次)</a></div>
+                <div class="transit-info">
+                    <div>乘車前往岡山市區西口</div>
+                    <div class="est-time">[預估車程：30 分鐘]</div>
+                </div>
+            </div>
+            
+            <div class="spot-node">
+                <div class="spot-icon">🚉</div>
+                <div class="spot-content">
+                    <div class="spot-name"><a href="https://www.google.com/maps/search/?api=1&query=Okayama+Station" target="_blank">岡山車站西口</a></div>
+                </div>
+            </div>
+
+            <div class="transit-path">
+                <div class="transit-tag"><a href="https://www.google.com/maps/dir/Okayama+Station/Aeon+Mall+Okayama/" target="_blank"><span class="line-color c-walk"></span>🚶 步行</a></div>
+                <div class="transit-info">
+                    <div>經由車站連絡通道前往商場</div>
+                    <div class="est-time">[預估時間：5 分鐘]</div>
+                </div>
+            </div>
+            
+            <div class="spot-node">
+                <div class="spot-icon">🛍️</div>
+                <div class="spot-content">
+                    <div class="spot-name"><a href="https://www.google.com/maps/search/?api=1&query=Aeon+Mall+Okayama" target="_blank">Aeon Mall 永旺夢樂城 岡山</a></div>
+                    <div class="spot-desc">
+                        【傍晚】您前往預約的髮廊理髮，同行家人於商場內休息逛街。<br>
+                        【晚餐】<a href="https://www.google.com/maps/search/?api=1&query=たん屋びぜん+イオンモール岡山店" target="_blank">たん屋びぜん</a> (厚切炭烤牛舌定食，為旅程接風)
+                    </div>
+                </div>
+            </div>
+
+            <div class="transit-path">
+                <div class="transit-tag"><a href="https://www.google.com/maps/dir/Okayama+Station/Seikibashi+Station/" target="_blank"><span class="line-color c-tram"></span>🚋 路面電車 (清輝橋線)</a></div>
+                <div class="transit-info">
+                    <div>岡山駅前 ➔ 清輝橋 (刷西瓜卡)</div>
+                    <div class="est-time">[預估車程：12 分鐘]</div>
+                </div>
+            </div>
+
+            <div class="spot-node">
+                <div class="spot-icon">🏨</div>
+                <div class="spot-content">
+                    <div class="spot-name"><a href="https://www.google.com/maps/search/?api=1&query=Seikibashi+Station+Okayama" target="_blank">返回住宿：清輝橋站 住宿點</a></div>
+                    <div class="spot-desc">辦理入住，連續入住 7 晚免換飯店。好好休息迎接明日旅程。</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Day 1 -->
+    <div class="page">
+        <div class="day-header">
+            <div class="day-num">Day 1</div>
+            <div class="day-title">10/9 (五) ｜ 神明之島與廣島燒</div>
+        </div>
+        
+        <div class="journey">
+            <div class="spot-node">
+                <div class="spot-icon">🏨</div><div class="spot-content"><div class="spot-name">清輝橋 住宿點出發</div></div>
+            </div>
+            
+            <div class="transit-path">
+                <div class="transit-tag"><a href="https://transit.yahoo.co.jp/search/result?from=岡山&to=広島" target="_blank"><span class="line-color c-shinkansen"></span>🚋 轉 🚄 山陽新幹線 (查詢即時班次)</a></div>
+                <div class="transit-info">
+                    <div>搭路面電車至【岡山站】 ➔ 轉乘新幹線至【廣島站】</div>
+                    <div class="est-time">[預估總車程：約 55 分鐘]</div>
+                </div>
+            </div>
+            
+            <div class="transit-path" style="margin-top:-20px;">
+                <div class="transit-tag"><a href="https://transit.yahoo.co.jp/search/result?from=広島&to=宮島口" target="_blank"><span class="line-color c-sanyo-hiro"></span>🚃 轉乘 JR 山陽本線 (查詢即時班次)</a></div>
+                <div class="transit-info">
+                    <div>【廣島站】 ➔ 【宮島口站】</div>
+                    <div class="est-time">[預估車程：約 30 分鐘]</div>
+                </div>
+            </div>
+
+            <div class="transit-path" style="margin-top:-20px;">
+                <div class="transit-tag"><a href="https://jr-miyajimaferry.co.jp/timetable/" target="_blank"><span class="line-color c-ferry"></span>⛴️ JR 宮島渡輪 (查詢即時船班)</a></div>
+                <div class="transit-info">
+                    <div>【宮島口】 ➔ 搭乘渡輪登島 (持 JR Pass 免費，需另付 100 日圓入島稅)</div>
+                    <div class="est-time">[預估船程：10 分鐘]</div>
+                </div>
+            </div>
+
+            <div class="spot-node">
+                <div class="spot-icon">⛩️</div>
+                <div class="spot-content">
+                    <div class="spot-name"><a href="https://www.google.com/maps/search/?api=1&query=Itsukushima+Shrine" target="_blank">宮島 ＆ 嚴島神社</a></div>
+                    <div class="spot-desc">
+                        【上午】避開連假人潮，悠哉欣賞海上大鳥居與溫馴野生鹿。<br>
+                        【午餐】<a href="https://www.google.com/maps/search/?api=1&query=Miyajima+Omotesando+Shopping+Street" target="_blank">表參道商店街</a> 吃現烤牡蠣。<br>
+                        【點心】名店 <a href="https://www.google.com/maps/search/?api=1&query=BIG+SETO+Miyajima" target="_blank">BIG SETO</a> 品嚐包著整顆牡蠣的現炸咖哩麵包。
+                    </div>
+                </div>
+            </div>
+
+            <div class="transit-path">
+                <div class="transit-tag"><a href="https://transit.yahoo.co.jp/search/result?from=宮島口&to=広島" target="_blank"><span class="line-color c-sanyo-hiro"></span>⛴️ 轉 🚃 原路返回市區</a></div>
+                <div class="transit-info">
+                    <div>搭渡輪轉 JR 返回廣島市區，前往享用晚餐。</div>
+                    <div class="est-time">[預估交通：約 50 分鐘]</div>
+                </div>
+            </div>
+            
+            <div class="spot-node">
+                <div class="spot-icon">🍳</div>
+                <div class="spot-content">
+                    <div class="spot-name"><a href="https://www.google.com/maps/search/?api=1&query=Okonomimura+Hiroshima" target="_blank">廣島燒村 (お好み村) 或 車站麗ちゃん</a></div>
+                    <div class="spot-desc">晚餐欣賞鐵板高麗菜與炒麵層層堆疊的正宗廣島燒。</div>
+                </div>
+            </div>
+            
+            <div class="transit-path">
+                <div class="transit-tag"><a href="https://transit.yahoo.co.jp/search/result?from=広島&to=岡山" target="_blank"><span class="line-color c-shinkansen"></span>🚄 轉 🚋 返回住宿 (查詢即時班次)</a></div>
+                <div class="transit-info">
+                    <div>搭乘新幹線返回【岡山站】，轉乘路面電車回清輝橋。</div>
+                    <div class="est-time">[預估總車程：約 60 分鐘]</div>
+                </div>
+            </div>
+
+            <div class="spot-node">
+                <div class="spot-icon">🏨</div>
+                <div class="spot-content">
+                    <div class="spot-name">返回住宿：清輝橋站 住宿點</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Day 2 -->
+    <div class="page">
+        <div class="day-header">
+            <div class="day-num">Day 2</div>
+            <div class="day-title">10/10 (六) ｜ 絕美庭園與歷史漫步</div>
+        </div>
+        
+        <div class="journey">
+            <div class="spot-node">
+                <div class="spot-icon">🏨</div><div class="spot-content"><div class="spot-name">清輝橋 住宿點出發</div></div>
+            </div>
+            
+            <div class="transit-path">
+                <div class="transit-tag"><a href="https://transit.yahoo.co.jp/search/result?from=岡山&to=広島" target="_blank"><span class="line-color c-shinkansen"></span>🚋 轉 🚄 山陽新幹線</a></div>
+                <div class="transit-info">
+                    <div>搭路面電車至岡山站 ➔ 轉乘新幹線至廣島站</div>
+                    <div class="est-time">[預估總車程：約 55 分鐘]</div>
+                </div>
+            </div>
+
+            <div class="transit-path" style="margin-top:-20px;">
+                <div class="transit-tag"><a href="https://www.google.com/maps/dir/Hiroshima+Station/Shukkeien/" target="_blank"><span class="line-color c-taxi"></span>🚕 計程車接駁</a></div>
+                <div class="transit-info">
+                    <div>廣島站 ➔ 縮景園 (四人搭車免去步行疲勞)</div>
+                    <div class="est-time">[預估車程： 5 分鐘]</div>
+                </div>
+            </div>
+            
+            <div class="spot-node">
+                <div class="spot-icon">🌿</div>
+                <div class="spot-content">
+                    <div class="spot-name"><a href="https://www.google.com/maps/search/?api=1&query=Shukkeien" target="_blank">縮景園</a></div>
+                    <div class="spot-desc">廣島最美日式庭園，步道平坦，池泉迴遊式造景極適合拍攝合照。</div>
+                </div>
+            </div>
+
+            <div class="transit-path">
+                <div class="transit-tag"><a href="https://www.google.com/maps/dir/Shukkeien/Hatchobori,+Hiroshima/" target="_blank"><span class="line-color c-bus"></span>🚕 或 🚌 接駁</a></div>
+                <div class="transit-info">
+                    <div>前往市中心商圈 (如八丁堀) 享用午餐。</div>
+                    <div class="est-time">[預估交通： 10 分鐘]</div>
+                </div>
+            </div>
+
+            <div class="spot-node">
+                <div class="spot-icon">🕊️</div>
+                <div class="spot-content">
+                    <div class="spot-name"><a href="https://www.google.com/maps/search/?api=1&query=Orizuru+Tower" target="_blank">紙鶴塔 (Orizuru Tower)</a></div>
+                    <div class="spot-desc">搭電梯至頂樓無死角俯瞰廣島市區，體驗摺紙鶴後沿螺旋木棧道緩步下樓。</div>
+                </div>
+            </div>
+
+            <div class="transit-path">
+                <div class="transit-tag"><a href="https://www.google.com/maps/dir/Orizuru+Tower/Atomic+Bomb+Dome/" target="_blank"><span class="line-color c-walk"></span>🚶 步行</a></div>
+                <div class="transit-info">
+                    <div>下樓過馬路即達。</div>
+                    <div class="est-time">[預估步行： 1 分鐘]</div>
+                </div>
+            </div>
+
+            <div class="spot-node">
+                <div class="spot-icon">🏛️</div>
+                <div class="spot-content">
+                    <div class="spot-name"><a href="https://www.google.com/maps/search/?api=1&query=Atomic+Bomb+Dome" target="_blank">原爆圓頂館 ＆ 舊日本銀行</a></div>
+                    <div class="spot-desc">
+                        近距離欣賞世界遺產。隨後沿著平坦的河畔步道步行約 8 分鐘至 <a href="https://www.google.com/maps/search/?api=1&query=Former+Bank+of+Japan+Hiroshima+Branch" target="_blank">舊日本銀行 廣島分支</a> 參觀地下金庫。
+                    </div>
+                </div>
+            </div>
+
+            <div class="transit-path">
+                <div class="transit-tag"><a href="https://transit.yahoo.co.jp/search/result?from=広島&to=岡山" target="_blank"><span class="line-color c-shinkansen"></span>🚋 轉 🚄 返回岡山</a></div>
+                <div class="transit-info">
+                    <div>搭乘廣島市電回廣島站 ➔ 搭新幹線返回岡山站。</div>
+                    <div class="est-time">[預估交通：約 60 分鐘]</div>
+                </div>
+            </div>
+
+            <div class="spot-node">
+                <div class="spot-icon">🍱</div>
+                <div class="spot-content">
+                    <div class="spot-name"><a href="https://www.google.com/maps/search/?api=1&query=Okayama+Agricultural+High+School+Restaurant" target="_blank">岡山農業高校餐廳</a></div>
+                    <div class="spot-desc">晚餐享用由在地農校學生參與培育食材製作的優質在地料理。</div>
+                </div>
+            </div>
+            
+            <div class="transit-path">
+                <div class="transit-tag"><a href="https://www.google.com/maps/dir/Okayama+Station/Seikibashi+Station/" target="_blank"><span class="line-color c-tram"></span>🚋 路面電車</a></div>
+                <div class="transit-info">
+                    <div>岡山駅前 ➔ 清輝橋</div>
+                    <div class="est-time">[預估車程： 12 分鐘]</div>
+                </div>
+            </div>
+
+            <div class="spot-node">
+                <div class="spot-icon">🏨</div>
+                <div class="spot-content">
+                    <div class="spot-name">返回住宿：清輝橋站 住宿點</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Day 3 -->
+    <div class="page">
+        <div class="day-header">
+            <div class="day-num">Day 3</div>
+            <div class="day-title">10/11 (日) ｜ 海港山城與尾道拉麵</div>
+        </div>
+        
+        <div class="journey">
+            <div class="spot-node">
+                <div class="spot-icon">🏨</div><div class="spot-content"><div class="spot-name">清輝橋 住宿點出發</div></div>
+            </div>
+            
+            <div class="transit-path">
+                <div class="transit-tag"><a href="https://transit.yahoo.co.jp/search/result?from=岡山&to=尾道" target="_blank"><span class="line-color c-sanyo-okayama"></span>🚄 轉 🚃 新幹線接山陽本線</a></div>
+                <div class="transit-info">
+                    <div>岡山 ➔ (新幹線) ➔ 福山站 ➔ (JR 山陽本線) ➔ 尾道站</div>
+                    <div class="est-time">[預估總車程：約 45 分鐘]</div>
+                </div>
+            </div>
+            
+            <div class="transit-path" style="margin-top:-20px;">
+                <div class="transit-tag"><a href="https://www.google.com/maps/dir/Onomichi+Station/Mt.+Senkoji+Ropeway+Sanroku+Station/" target="_blank"><span class="line-color c-bus"></span>🚶 或 🚌 接駁</a></div>
+                <div class="transit-info">
+                    <div>尾道站 ➔ 纜車山麓站</div>
+                    <div class="est-time">[預估交通： 15 分鐘]</div>
+                </div>
+            </div>
+            
+            <div class="spot-node">
+                <div class="spot-icon">🚠</div>
+                <div class="spot-content">
+                    <div class="spot-name"><a href="https://www.google.com/maps/search/?api=1&query=Mt.+Senkoji+Ropeway" target="_blank">千光寺山纜車 與 文學小徑</a></div>
+                    <div class="spot-desc">搭乘纜車直達山頂俯瞰瀨戶內海，可慢慢沿平緩的文學小徑走下山，或搭纜車原路來回。</div>
+                </div>
+            </div>
+
+            <div class="transit-path">
+                <div class="transit-tag"><a href="https://www.google.com/maps/dir/Mt.+Senkoji+Ropeway+Sanroku+Station/Onomichi+Station/" target="_blank"><span class="line-color c-walk"></span>🚶 步行</a></div>
+                <div class="transit-info">
+                    <div>山麓站 ➔ 站前商店街</div>
+                    <div class="est-time">[預估步行： 10 分鐘]</div>
+                </div>
+            </div>
+
+            <div class="spot-node">
+                <div class="spot-icon">🍜</div>
+                <div class="spot-content">
+                    <div class="spot-name"><a href="https://www.google.com/maps/search/?api=1&query=Onomichi+Ramen" target="_blank">尾道拉麵</a></div>
+                    <div class="spot-desc">午餐品嚐在地著名的尾道拉麵 (醬油基底搭配濃郁豬背脂)。</div>
+                </div>
+            </div>
+
+            <div class="transit-path">
+                <div class="transit-tag"><a href="https://www.google.com/maps/dir/Onomichi+Station/ONOMICHI+U2/" target="_blank"><span class="line-color c-walk"></span>🚶 步行</a></div>
+                <div class="transit-info">
+                    <div>沿海岸步道散步前往倉庫群</div>
+                    <div class="est-time">[預估步行： 10 分鐘]</div>
+                </div>
+            </div>
+
+            <div class="spot-node">
+                <div class="spot-icon">☕</div>
+                <div class="spot-content">
+                    <div class="spot-name"><a href="https://www.google.com/maps/search/?api=1&query=ONOMICHI+U2" target="_blank">ONOMICHI U2 倉庫群</a></div>
+                    <div class="spot-desc">海港邊由舊倉庫改建的複合式文創空間，內有咖啡廳與伴手禮，適合吹海風散步。</div>
+                </div>
+            </div>
+            
+            <div class="transit-path">
+                <div class="transit-tag"><a href="https://transit.yahoo.co.jp/search/result?from=尾道&to=岡山" target="_blank"><span class="line-color c-shinkansen"></span>🚃 轉 🚄 返回住宿</a></div>
+                <div class="transit-info">
+                    <div>尾道 ➔ (JR) ➔ 福山 ➔ (新幹線) ➔ 岡山 ➔ (路面電車) ➔ 清輝橋</div>
+                    <div class="est-time">[預估總交通：約 60 分鐘]</div>
+                </div>
+            </div>
+
+            <div class="spot-node">
+                <div class="spot-icon">🏨</div>
+                <div class="spot-content">
+                    <div class="spot-name">返回住宿：清輝橋站 住宿點</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Day 4 -->
+    <div class="page">
+        <div class="day-header">
+            <div class="day-num">Day 4</div>
+            <div class="day-title">10/12 (一) ｜ 吉備路神話與巨大鳥居</div>
+        </div>
+        
+        <div class="journey">
+            <div class="spot-node">
+                <div class="spot-icon">🏨</div><div class="spot-content"><div class="spot-name">清輝橋 住宿點出發</div></div>
+            </div>
+            
+            <div class="transit-path">
+                <div class="transit-tag"><a href="https://transit.yahoo.co.jp/search/result?from=岡山&to=吉備津" target="_blank"><span class="line-color c-momotaro"></span>🚋 轉 🚃 桃太郎線 (查詢即時班次)</a></div>
+                <div class="transit-info">
+                    <div>清輝橋 ➔ 岡山 ➔ 吉備津站</div>
+                    <div class="est-time">[預估交通：約 35 分鐘]</div>
+                </div>
+            </div>
+
+            <div class="transit-path" style="margin-top:-20px;">
+                <div class="transit-tag"><a href="https://www.google.com/maps/dir/Kibitsu+Station/Kibitsu+Shrine/" target="_blank"><span class="line-color c-walk"></span>🚶 步行</a></div>
+                <div class="transit-info">
+                    <div>吉備津站 ➔ 吉備津神社</div>
+                    <div class="est-time">[預估步行： 10 分鐘]</div>
+                </div>
+            </div>
+            
+            <div class="spot-node">
+                <div class="spot-icon">⛩️️</div>
+                <div class="spot-content">
+                    <div class="spot-name"><a href="https://www.google.com/maps/search/?api=1&query=Kibitsu+Shrine" target="_blank">吉備津神社</a></div>
+                    <div class="spot-desc">欣賞依山勢起伏、極具攝影張力的 398 公尺木造迴廊。</div>
+                </div>
+            </div>
+
+            <div class="transit-path">
+                <div class="transit-tag"><a href="https://transit.yahoo.co.jp/search/result?from=吉備津&to=備中高松" target="_blank"><span class="line-color c-momotaro"></span>🚶 轉 🚃 桃太郎線</a></div>
+                <div class="transit-info">
+                    <div>步行回吉備津站 ➔ 搭一站至【備中高松站】</div>
+                    <div class="est-time">[預估交通：約 15 分鐘]</div>
+                </div>
+            </div>
+            
+            <div class="transit-path" style="margin-top:-20px;">
+                <div class="transit-tag"><a href="https://www.google.com/maps/dir/Bitchu-Takamatsu+Station/Saijo+Inari/" target="_blank"><span class="line-color c-taxi"></span>🚕 計程車接駁</a></div>
+                <div class="transit-info">
+                    <div>備中高松站 <strong>出站直接攔計程車</strong></div>
+                    <div class="est-time">[預估車程： 5 分鐘]</div>
+                </div>
+            </div>
+
+            <div class="spot-node">
+                <div class="spot-icon">🦊</div>
+                <div class="spot-content">
+                    <div class="spot-name"><a href="https://www.google.com/maps/search/?api=1&query=Saijo+Inari" target="_blank">最上稻荷神社</a></div>
+                    <div class="spot-desc">欣賞日本三大稻荷之一的巨大鳥居與壯觀寺院。回程亦請司機接駁回車站。</div>
+                </div>
+            </div>
+
+            <div class="transit-path">
+                <div class="transit-tag"><a href="https://transit.yahoo.co.jp/search/result?from=備中高松&to=岡山" target="_blank"><span class="line-color c-momotaro"></span>🚕 轉 🚃 返回市區</a></div>
+                <div class="transit-info">
+                    <div>搭計程車回備中高松站 ➔ 搭 JR 回岡山站。</div>
+                    <div class="est-time">[預估交通：約 30 分鐘]</div>
+                </div>
+            </div>
+            
+            <div class="spot-node">
+                <div class="spot-icon">🍽️</div>
+                <div class="spot-content">
+                    <div class="spot-name">岡山車站周邊晚餐</div>
+                    <div class="spot-desc">返回岡山車站周邊或百貨商場內享用晚餐。</div>
+                </div>
+            </div>
+
+            <div class="transit-path">
+                <div class="transit-tag"><a href="https://www.google.com/maps/dir/Okayama+Station/Seikibashi+Station/" target="_blank"><span class="line-color c-tram"></span>🚋 路面電車</a></div>
+                <div class="transit-info">
+                    <div>岡山駅前 ➔ 清輝橋</div>
+                    <div class="est-time">[預估車程： 12 分鐘]</div>
+                </div>
+            </div>
+            
+            <div class="spot-node">
+                <div class="spot-icon">🏨</div>
+                <div class="spot-content">
+                    <div class="spot-name">返回住宿：清輝橋站 住宿點</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Day 5 -->
+    <div class="page">
+        <div class="day-header">
+            <div class="day-num">Day 5</div>
+            <div class="day-title">10/13 (二) ｜ 水鄉漫遊與微笑布丁</div>
+        </div>
+        
+        <div class="journey">
+            <div class="spot-node">
+                <div class="spot-icon">🏨</div><div class="spot-content"><div class="spot-name">清輝橋 住宿點出發</div></div>
+            </div>
+            
+            <div class="transit-path">
+                <div class="transit-tag"><a href="https://transit.yahoo.co.jp/search/result?from=岡山&to=倉敷" target="_blank"><span class="line-color c-sanyo-okayama"></span>🚋 轉 🚃 山陽本線 (查詢即時班次)</a></div>
+                <div class="transit-info">
+                    <div>清輝橋 ➔ 岡山 ➔ 倉敷站</div>
+                    <div class="est-time">[預估交通：約 35 分鐘]</div>
+                </div>
+            </div>
+
+            <div class="transit-path" style="margin-top:-20px;">
+                <div class="transit-tag"><a href="https://www.google.com/maps/dir/Kurashiki+Station/Kurashiki+Bikan+Historical+Quarter/" target="_blank"><span class="line-color c-taxi"></span>🚕 計程車接駁</a></div>
+                <div class="transit-info">
+                    <div>倉敷站 ➔ 美觀地區入口 (四人搭車保留體力)</div>
+                    <div class="est-time">[預估車程： 5 分鐘]</div>
+                </div>
+            </div>
+            
+            <div class="spot-node">
+                <div class="spot-icon">🛶</div>
+                <div class="spot-content">
+                    <div class="spot-name"><a href="https://www.google.com/maps/search/?api=1&query=Kurashiki+Bikan+Historical+Quarter" target="_blank">倉敷美觀地區</a></div>
+                    <div class="spot-desc">平日老街清幽，白壁土藏與柳樹交織。強烈建議安排體驗「倉敷川遊船」。</div>
+                </div>
+            </div>
+
+            <div class="transit-path">
+                <div class="transit-tag"><a href="https://www.google.com/maps/dir/Kurashiki+Bikan+Historical+Quarter/Yuurin-an/" target="_blank"><span class="line-color c-walk"></span>🚶 步行</a></div>
+                <div class="transit-info">
+                    <div>於美觀地區內散步尋找甜點</div>
+                    <div class="est-time">[預估步行： 5 分鐘]</div>
+                </div>
+            </div>
+
+            <div class="spot-node">
+                <div class="spot-icon">🍮</div>
+                <div class="spot-content">
+                    <div class="spot-name"><a href="https://www.google.com/maps/search/?api=1&query=Yuurin-an+Kurashiki" target="_blank">有鄰庵</a> ＆ <a href="https://www.google.com/maps/search/?api=1&query=Kurashiki+Momoko" target="_blank">倉敷桃子</a></div>
+                    <div class="spot-desc">
+                        【午餐】有鄰庵招牌生雞蛋拌飯與每天限量的「微笑布丁」。<br>
+                        【午茶】倉敷桃子品嚐水蜜桃或當季精緻水果聖代。
+                    </div>
+                </div>
+            </div>
+
+            <div class="transit-path">
+                <div class="transit-tag"><a href="https://www.google.com/maps/dir/Kurashiki+Bikan+Historical+Quarter/やき鳥+くらしき高田屋/" target="_blank"><span class="line-color c-walk"></span>🚶 步行</a></div>
+                <div class="transit-info">
+                    <div>點燈後漫步老街，前往晚餐餐廳。</div>
+                    <div class="est-time">[預估步行： 5 分鐘]</div>
+                </div>
+            </div>
+
+            <div class="spot-node">
+                <div class="spot-icon">🍢</div>
+                <div class="spot-content">
+                    <div class="spot-name"><a href="https://www.google.com/maps/search/?api=1&query=やき鳥+くらしき高田屋" target="_blank">高田屋燒鳥</a></div>
+                    <div class="spot-desc">品嚐在地老店精準火候的烤串。<br><span style="color:var(--kurenai); font-weight:600;">※ 務必請飯店櫃檯或信用卡秘書提前訂位。</span></div>
+                </div>
+            </div>
+            
+            <div class="transit-path">
+                <div class="transit-tag"><a href="https://transit.yahoo.co.jp/search/result?from=倉敷&to=岡山" target="_blank"><span class="line-color c-sanyo-okayama"></span>🚶 轉 🚃 轉 🚋 返回住宿</a></div>
+                <div class="transit-info">
+                    <div>步行或搭計程車回倉敷站 ➔ 搭 JR 至岡山 ➔ 路面電車回清輝橋。</div>
+                    <div class="est-time">[預估交通：約 40 分鐘]</div>
+                </div>
+            </div>
+
+            <div class="spot-node">
+                <div class="spot-icon">🏨</div>
+                <div class="spot-content">
+                    <div class="spot-name">返回住宿：清輝橋站 住宿點</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Day 6 -->
+    <div class="page">
+        <div class="day-header">
+            <div class="day-num">Day 6</div>
+            <div class="day-title">10/14 (三) ｜ 岡山雙城漫遊</div>
+        </div>
+        
+        <div class="journey">
+            <div class="spot-node">
+                <div class="spot-icon">🏨</div><div class="spot-content"><div class="spot-name">清輝橋 住宿點出發</div></div>
+            </div>
+            
+            <div class="transit-path">
+                <div class="transit-tag"><a href="https://www.google.com/maps/dir/Seikibashi+Station/Shiroshita+Station+Okayama/" target="_blank"><span class="line-color c-tram"></span>🚋 路面電車 (刷西瓜卡)</a></div>
+                <div class="transit-info">
+                    <div>清輝橋 ➔ 轉乘(岡山站前) ➔ 城下站</div>
+                    <div class="est-time">[預估車程： 15 分鐘]</div>
+                </div>
+            </div>
+
+            <div class="transit-path" style="margin-top:-20px;">
+                <div class="transit-tag"><a href="https://www.google.com/maps/dir/Shiroshita+Station+Okayama/Okayama+Shrine/" target="_blank"><span class="line-color c-walk"></span>🚶 步行</a></div>
+                <div class="transit-info">
+                    <div>城下站 ➔ 岡山神社</div>
+                    <div class="est-time">[預估步行： 5 分鐘]</div>
+                </div>
+            </div>
+            
+            <div class="spot-node">
+                <div class="spot-icon">⛩️</div>
+                <div class="spot-content">
+                    <div class="spot-name"><a href="https://www.google.com/maps/search/?api=1&query=Okayama+Shrine" target="_blank">岡山神社</a> ＆ <a href="https://www.google.com/maps/search/?api=1&query=Okayama+Korakuen" target="_blank">後樂園</a></div>
+                    <div class="spot-desc">清晨於神社散步，接著參觀日本三大名園「後樂園」，庭園平坦好走，輕鬆無負擔。</div>
+                </div>
+            </div>
+
+            <div class="transit-path">
+                <div class="transit-tag"><a href="https://www.google.com/maps/dir/Okayama+Korakuen/Okayama+Castle/" target="_blank"><span class="line-color c-walk"></span>🚶 步行</a></div>
+                <div class="transit-info">
+                    <div>後樂園 ➔ 跨過吊橋即達岡山城</div>
+                    <div class="est-time">[預估步行： 5 分鐘]</div>
+                </div>
+            </div>
+
+            <div class="spot-node">
+                <div class="spot-icon">🏯</div>
+                <div class="spot-content">
+                    <div class="spot-name"><a href="https://www.google.com/maps/search/?api=1&query=Okayama+Castle" target="_blank">岡山城</a></div>
+                    <div class="spot-desc">外觀黑色的帥氣「烏城」，城內設有電梯，登頂賞景輕鬆寫意。</div>
+                </div>
+            </div>
+
+            <div class="transit-path">
+                <div class="transit-tag"><a href="https://www.google.com/maps/dir/Okayama+Castle/Okayama+Station/" target="_blank"><span class="line-color c-tram"></span>🚋 路面電車</a></div>
+                <div class="transit-info">
+                    <div>搭電車返回岡山市區，自由活動與晚餐。</div>
+                    <div class="est-time">[預估車程： 10 分鐘]</div>
+                </div>
+            </div>
+
+            <div class="spot-node">
+                <div class="spot-icon">🦀</div>
+                <div class="spot-content">
+                    <div class="spot-name">岡山市區晚餐 (推薦螃蟹大餐)</div>
+                    <div class="spot-desc">若想安排吃螃蟹大餐 (如螃蟹道樂)，這晚的時間非常充裕適合。</div>
+                </div>
+            </div>
+            
+            <div class="transit-path">
+                <div class="transit-tag"><a href="https://www.google.com/maps/dir/Okayama+Station/Seikibashi+Station/" target="_blank"><span class="line-color c-tram"></span>🚋 路面電車</a></div>
+                <div class="transit-info">
+                    <div>岡山駅前 ➔ 清輝橋</div>
+                    <div class="est-time">[預估車程： 12 分鐘]</div>
+                </div>
+            </div>
+
+            <div class="spot-node">
+                <div class="spot-icon">🏨</div>
+                <div class="spot-content">
+                    <div class="spot-name">返回住宿：清輝橋站 住宿點</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Day 7 -->
+    <div class="page">
+        <div class="day-header">
+            <div class="day-num">Day 7</div>
+            <div class="day-title">10/15 (四) ｜ 市區採買與賦歸</div>
+        </div>
+        
+        <div class="journey">
+            <div class="spot-node">
+                <div class="spot-icon">🏨</div><div class="spot-content"><div class="spot-name">退房：清輝橋 住宿點</div></div>
+            </div>
+            
+            <div class="transit-path">
+                <div class="transit-tag"><a href="https://www.google.com/maps/dir/Seikibashi+Station/Okayama+Station/" target="_blank"><span class="line-color c-tram"></span>🚋 路面電車</a></div>
+                <div class="transit-info">
+                    <div>清輝橋退房 ➔ 攜帶行李至岡山車站寄放 (刷西瓜卡)</div>
+                    <div class="est-time">[預估車程： 12 分鐘]</div>
+                </div>
+            </div>
+            
+            <div class="spot-node">
+                <div class="spot-icon">🛍️</div>
+                <div class="spot-content">
+                    <div class="spot-name">車站商圈尋寶 與 午餐</div>
+                    <div class="spot-desc">在商圈 (AEON、地下街或 <a href="https://www.google.com/maps/search/?api=1&query=Bic+Camera+Okayama" target="_blank">Bic Camera</a>) 進行最後的伴手禮與相機模型採買。提早在車站周邊吃午餐，或購買鐵路便當。</div>
+                </div>
+            </div>
+
+            <div class="transit-path">
+                <div class="transit-tag"><a href="https://www.okayama-airport.org/tw/access/bus" target="_blank"><span class="line-color c-bus"></span>🚌 機場巴士 (點擊查即時時刻)</a></div>
+                <div class="transit-info">
+                    <div><strong>14:00 - 14:15</strong> 於岡山車站西口搭乘機場巴士。</div>
+                    <div class="est-time">[預估車程： 30 分鐘]</div>
+                </div>
+            </div>
+
+            <div class="spot-node">
+                <div class="spot-icon">✈️</div>
+                <div class="spot-content">
+                    <div class="spot-name"><a href="https://www.google.com/maps/search/?api=1&query=Okayama+Airport" target="_blank">岡山機場 (14:45 抵達)</a></div>
+                    <div class="spot-desc">配合廉航規定提早抵達。從容辦理 <strong>17:55</strong> 的航班報到與託運，平安返台。</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
